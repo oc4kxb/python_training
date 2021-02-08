@@ -1,2 +1,2 @@
-# python_training
+# Repository for python training
 ST course practice
