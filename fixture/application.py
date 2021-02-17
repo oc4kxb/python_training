@@ -8,6 +8,9 @@ class Application:
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
+    def destroy(self):
+        self.wd.quit()
+
     def login(self, username, password):
         wd = self.wd
         self.open_home_page()
@@ -133,6 +136,3 @@ class Application:
             wd.find_element_by_name("byear").send_keys(contact.birth_year)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
-
-    def destroy(self):
-        self.wd.quit()
