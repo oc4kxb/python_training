@@ -71,14 +71,8 @@ class ContactHelper:
         # fill homepage
         self.change_text_field_value("homepage", contact.homepage)
         # fill birthdate
-        if contact.birth_day is not None:
-            wd.find_element_by_name("bday").click()
-            Select(wd.find_element_by_name("bday")).select_by_visible_text(contact.birth_day)
-            wd.find_element_by_xpath("//option[@value='24']").click()
-        if contact.birth_month is not None:
-            wd.find_element_by_name("bmonth").click()
-            Select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.birth_month)
-            wd.find_element_by_xpath("//option[@value='December']").click()
+        self.change_select_field_value("bday", contact.birth_day)
+        self.change_select_field_value("bmonth", contact.birth_month)
         self.change_text_field_value("byear", contact.birth_year)
 
     def change_text_field_value(self, element_name, text):
@@ -87,3 +81,10 @@ class ContactHelper:
             wd.find_element_by_name(element_name).click()
             wd.find_element_by_name(element_name).clear()
             wd.find_element_by_name(element_name).send_keys(text)
+
+    def change_select_field_value(self, element_name, value):
+        wd = self.app.wd
+        if value is not None:
+            wd.find_element_by_name(element_name).click()
+            Select(wd.find_element_by_name(element_name)).select_by_visible_text(value)
+            wd.find_element_by_xpath("//option[@value='" + value + "']").click()
