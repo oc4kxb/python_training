@@ -44,9 +44,9 @@ class GroupHelper:
         self.change_field_value("group_header", group.header)
         self.change_field_value("group_footer", group.footer)
 
-    def change_field_value(self, locator, text):
+    def change_field_value(self, element_name, text):
         wd = self.app.wd
         if text is not None:
-            wd.find_element_by_name(locator).click()
-            wd.find_element_by_name(locator).clear()
-            wd.find_element_by_name(locator).send_keys(text)
+            wd.find_element_by_name(element_name).click()
+            wd.find_element_by_name(element_name).clear()
+            wd.find_element_by_name(element_name).send_keys(text)

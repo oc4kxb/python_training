@@ -81,8 +81,9 @@ class ContactHelper:
             wd.find_element_by_xpath("//option[@value='December']").click()
         self.change_text_field_value("byear", contact.birth_year)
 
-    def change_text_field_value(self, locator, text):
+    def change_text_field_value(self, element_name, text):
         wd = self.app.wd
         if text is not None:
-            wd.find_element_by_name(locator).clear()
-            wd.find_element_by_name(locator).send_keys(text)
+            wd.find_element_by_name(element_name).click()
+            wd.find_element_by_name(element_name).clear()
+            wd.find_element_by_name(element_name).send_keys(text)
