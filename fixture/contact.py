@@ -13,6 +13,24 @@ class ContactHelper:
     def create(self, contact):
         wd = self.app.wd
         self.open_contact_creation_page()
+        self.fill_form(contact)
+        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.app.return_to_home_page()
+
+    def edit_first(self, contact):
+        wd = self.app.wd
+        # click home link
+        wd.find_element_by_link_text("home").click()
+        # click edit first contact button
+        wd.find_element_by_xpath("//tr[@name='entry']//img[@title='Edit']").click()
+        self.fill_form(contact)
+        # click update button
+        wd.find_element_by_css_selector("[value='Update']").click()
+        # return to home page
+        self.app.return_to_home_page()
+
+    def fill_form(self, contact):
+        wd = self.app.wd
         # fill names
         if contact.firstname != "":
             wd.find_element_by_name("firstname").click()
@@ -80,27 +98,6 @@ class ContactHelper:
             wd.find_element_by_name("byear").click()
             wd.find_element_by_name("byear").clear()
             wd.find_element_by_name("byear").send_keys(contact.birth_year)
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.app.return_to_home_page()
-
-    def edit_first(self, contact):
-        wd = self.app.wd
-        # click home link
-        wd.find_element_by_link_text("home").click()
-        # click edit first contact button
-        wd.find_element_by_xpath("//tr[@name='entry']//img[@title='Edit']").click()
-        # clear last name field
-        wd.find_element_by_name("lastname").clear()
-        # type new last name
-        wd.find_element_by_name("lastname").send_keys(contact.lastname)
-        # clear first name field
-        wd.find_element_by_name("firstname").clear()
-        # type new first name
-        wd.find_element_by_name("firstname").send_keys(contact.firstname)
-        # click update button
-        wd.find_element_by_css_selector("[value='Update']").click()
-        # return to home page
-        self.app.return_to_home_page()
 
     def delete_first(self):
         wd = self.app.wd
