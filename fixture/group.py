@@ -15,12 +15,12 @@ class GroupHelper:
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
-    def modify_first(self, group):
+    def modify_first(self, new_group_data):
         wd = self.app.wd
         self.open_groups_page()
         self.select_first()
         wd.find_element_by_name("edit").click()
-        self.fill_form(group)
+        self.fill_form(new_group_data)
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
 

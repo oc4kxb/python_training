@@ -17,13 +17,13 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.app.return_to_home_page()
 
-    def modify_first(self, contact):
+    def modify_first(self, new_contact_data):
         wd = self.app.wd
         # click home link
         wd.find_element_by_link_text("home").click()
         # click edit first contact button
         wd.find_element_by_xpath("//tr[@name='entry']//img[@title='Edit']").click()
-        self.fill_form(contact)
+        self.fill_form(new_contact_data)
         # click update button
         wd.find_element_by_css_selector("[value='Update']").click()
         # return to home page
