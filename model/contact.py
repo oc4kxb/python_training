@@ -3,8 +3,8 @@ import os
 
 class Contact:
 
-    def __init__(self, firstname = "", middlename = "", nickname = "", lastname = "", company_name = "", employee_title = "", address = "",
-                       home_phone = "", mobile_phone = "", work_phone = "", email = "", homepage = "", birth_day = "", birth_month = "", birth_year = "", photo_name = ""):
+    def __init__(self, firstname=None, middlename=None, nickname=None, lastname=None, company_name=None, employee_title=None, address=None,
+                       home_phone=None, mobile_phone=None, work_phone=None, email=None, homepage=None, birth_day=None, birth_month=None, birth_year=None, photo_name=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
