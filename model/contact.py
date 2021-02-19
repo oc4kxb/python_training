@@ -22,6 +22,7 @@ class Contact:
         self.birth_year = birth_year
         self.photo_name = photo_name
 
-    def get_photo_path(self, photo_name):
+    @staticmethod
+    def get_photo_path(photo_name):
         current_dir = os.path.abspath(os.path.dirname(__file__))
         return os.path.join(current_dir, photo_name)

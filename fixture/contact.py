@@ -1,4 +1,5 @@
 from selenium.webdriver.support.select import Select
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -50,10 +51,8 @@ class ContactHelper:
         self.change_text_field_value("lastname", contact.lastname)
         # fill nickname
         self.change_text_field_value("nickname", contact.nickname)
-        if contact.photo_name is not None:
-            # upload photo
-            photo_path = contact.get_photo_path(contact.photo_name)
-            wd.find_element_by_name("photo").send_keys(photo_path)
+        # upload photo
+        self.upload_photo("photo", contact.photo_name)
         # fill company name
         self.change_text_field_value("company", contact.company_name)
         # fill title
@@ -88,3 +87,9 @@ class ContactHelper:
             wd.find_element_by_name(element_name).click()
             Select(wd.find_element_by_name(element_name)).select_by_visible_text(value)
             wd.find_element_by_xpath("//option[@value='" + value + "']").click()
+
+    def upload_photo(self, element_name, file_name):
+        wd = self.app.wd
+        if file_name is not None:
+            photo_path = Contact.get_photo_path(file_name)
+            wd.find_element_by_name("photo").send_keys(photo_path)
