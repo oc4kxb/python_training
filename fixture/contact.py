@@ -39,7 +39,7 @@ class ContactHelper:
         # click delete button
         wd.find_element_by_css_selector("[value='Delete']").click()
         # confirm deletion
-        wd.switch_to_alert().accept()
+        wd.switch_to.alert.accept()
         # return to home page
         wd.find_element_by_link_text("home").click()
 
