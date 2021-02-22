@@ -20,8 +20,7 @@ class ContactHelper:
 
     def modify_first(self, new_contact_data):
         wd = self.app.wd
-        # click home link
-        wd.find_element_by_link_text("home").click()
+        self.open_contacts_page()
         # click edit first contact button
         wd.find_element_by_xpath("//tr[@name='entry']//img[@title='Edit']").click()
         self.fill_form(new_contact_data)
@@ -32,8 +31,7 @@ class ContactHelper:
 
     def delete_first(self):
         wd = self.app.wd
-        # click home link
-        wd.find_element_by_link_text("home").click()
+        self.open_contacts_page()
         # select first contact
         wd.find_element_by_name("selected[]").click()
         # click delete button
@@ -41,6 +39,10 @@ class ContactHelper:
         # confirm deletion
         wd.switch_to.alert.accept()
         # return to home page
+        self.open_contacts_page()
+
+    def open_contacts_page(self):
+        wd = self.app.wd
         wd.find_element_by_link_text("home").click()
 
     def fill_form(self, contact):
@@ -93,3 +95,8 @@ class ContactHelper:
         if file_name is not None:
             photo_path = Contact.get_photo_path(file_name)
             wd.find_element_by_name("photo").send_keys(photo_path)
+
+    def count(self):
+        wd = self.app.wd
+        self.open_contacts_page()
+        return len(wd.find_elements_by_name("selected[]"))
