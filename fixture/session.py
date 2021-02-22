@@ -16,7 +16,8 @@ class SessionHelper:
     def logout(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//form[@name='logout']/a").click()
-        wd.find_element_by_id("LoginForm")
+        # wd.find_element_by_id("LoginForm") Использовать, когда логаут выполняется после каждого теста,
+        # а не в конце сессии
 
     def ensure_logout(self):
         wd = self.app.wd
