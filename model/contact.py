@@ -3,8 +3,10 @@ import os
 
 class Contact:
 
-    def __init__(self, firstname=None, middlename=None, nickname=None, lastname=None, company_name=None, employee_title=None, address=None,
-                       home_phone=None, mobile_phone=None, work_phone=None, email=None, homepage=None, birth_day=None, birth_month=None, birth_year=None, photo_name=None):
+    def __init__(self, firstname=None, middlename=None, nickname=None, lastname=None, company_name=None,
+                 employee_title=None, address=None, home_phone=None, mobile_phone=None, work_phone=None,
+                 email=None, homepage=None, birth_day=None, birth_month=None, birth_year=None,
+                 photo_name=None, id=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -21,6 +23,7 @@ class Contact:
         self.birth_month = birth_month
         self.birth_year = birth_year
         self.photo_name = photo_name
+        self.id = id
 
     @staticmethod
     def get_photo_path(photo_name):
