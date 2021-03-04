@@ -1,4 +1,8 @@
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from model.contact import Contact
 
 
@@ -38,12 +42,14 @@ class ContactHelper:
         wd.find_element_by_css_selector("[value='Delete']").click()
         # confirm deletion
         wd.switch_to.alert.accept()
+        # wait delete confirmation message
+        WebDriverWait(wd, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.msgbox")))
         # return to home page
         self.open_contacts_page()
 
     def open_contacts_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("addressbook/")):
+        if not (wd.current_url.endswith("addressbook/") or wd.current_url.endswith("addressbook/index.php")):
             wd.find_element_by_link_text("home").click()
 
     def fill_form(self, contact):
@@ -97,11 +103,6 @@ class ContactHelper:
             photo_path = Contact.get_photo_path(file_name)
             wd.find_element_by_name("photo").send_keys(photo_path)
 
-    def count(self):
-        wd = self.app.wd
-        self.open_contacts_page()
-        return len(wd.find_elements_by_name("selected[]"))
-
     def get_contacts_list(self):
         wd = self.app.wd
         self.open_contacts_page()
@@ -109,6 +110,6 @@ class ContactHelper:
         for element in wd.find_elements_by_name("entry"):
             lastname = element.find_element_by_xpath("./td[2]").text
             firstname = element.find_element_by_xpath("./td[3]").text
-            id = element.find_element_by_name("selected[]").get_attribute("id")
+            id = element.find_element_by_xpath("./td[1]/input").get_attribute("id")
             contacts.append(Contact(lastname=lastname, firstname=firstname, id=id))
         return contacts
