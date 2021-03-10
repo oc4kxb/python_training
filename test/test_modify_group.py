@@ -5,10 +5,13 @@ def test_modify_group_name(app):
     if len(app.group.get_groups_list()) == 0:
         app.group.create(Group(name="modify_name_test"))
     old_groups = app.group.get_groups_list()
-    app.group.modify_first(Group(name="EditedName"))
+    group = Group(name="EditedName")
+    group.id = old_groups[0].id
+    app.group.modify_first(group)
     new_groups = app.group.get_groups_list()
-
     assert len(new_groups) == len(old_groups)
+    old_groups[0] = group
+    assert sorted(new_groups, key=Group.id_or_max) == sorted(old_groups, key=Group.id_or_max)
 
 
 def test_modify_group_header(app):
