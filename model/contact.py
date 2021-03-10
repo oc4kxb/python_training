@@ -25,6 +25,12 @@ class Contact:
         self.photo_name = photo_name
         self.id = id
 
+    def __repr__(self):
+        return "%s:%s-%s" % (self.id, self.firstname, self.lastname)
+
+    def __eq__(self, other):
+        return self.id == other.id and self.firstname == other.firstname and self.lastname == other.lastname
+
     @staticmethod
     def get_photo_path(photo_name):
         current_dir = os.path.abspath(os.path.dirname(__file__))
