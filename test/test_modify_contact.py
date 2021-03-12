@@ -2,7 +2,7 @@ from model.contact import Contact
 
 
 def test_modify_contact_lastname(app):
-    if len(app.contact.get_contacts_list()) == 0:
+    if app.contact.count() == 0:
         app.contact.create(Contact(lastname="modify", firstname="test"))
     old_contacts = app.contact.get_contacts_list()
     contact = Contact(lastname="EditedLastName")

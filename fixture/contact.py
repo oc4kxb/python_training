@@ -103,6 +103,11 @@ class ContactHelper:
             photo_path = Contact.get_photo_path(file_name)
             wd.find_element_by_name("photo").send_keys(photo_path)
 
+    def count(self):
+        wd = self.app.wd
+        self.open_contacts_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
     def get_contacts_list(self):
         wd = self.app.wd
         self.open_contacts_page()
