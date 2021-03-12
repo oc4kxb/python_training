@@ -11,6 +11,8 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    contact_cache = None
+
     def open_contact_creation_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
@@ -21,6 +23,7 @@ class ContactHelper:
         self.fill_form(contact)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.app.return_to_home_page()
+        self.contact_cache = None
 
     def modify_first(self, new_contact_data):
         wd = self.app.wd
@@ -32,6 +35,7 @@ class ContactHelper:
         wd.find_element_by_css_selector("[value='Update']").click()
         # return to home page
         self.app.return_to_home_page()
+        self.contact_cache = None
 
     def delete_first(self):
         wd = self.app.wd
@@ -46,6 +50,7 @@ class ContactHelper:
         WebDriverWait(wd, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.msgbox")))
         # return to home page
         self.open_contacts_page()
+        self.contact_cache = None
 
     def open_contacts_page(self):
         wd = self.app.wd
@@ -109,12 +114,13 @@ class ContactHelper:
         return len(wd.find_elements_by_name("selected[]"))
 
     def get_contacts_list(self):
-        wd = self.app.wd
-        self.open_contacts_page()
-        contacts = []
-        for element in wd.find_elements_by_name("entry"):
-            lastname = element.find_element_by_xpath("./td[2]").text
-            firstname = element.find_element_by_xpath("./td[3]").text
-            id = element.find_element_by_xpath("./td[1]/input").get_attribute("id")
-            contacts.append(Contact(lastname=lastname, firstname=firstname, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_contacts_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                lastname = element.find_element_by_xpath("./td[2]").text
+                firstname = element.find_element_by_xpath("./td[3]").text
+                id = element.find_element_by_xpath("./td[1]/input").get_attribute("id")
+                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
+        return list(self.contact_cache)
