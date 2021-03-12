@@ -2,7 +2,7 @@ from model.group import Group
 
 
 def test_modify_group_name(app):
-    if len(app.group.get_groups_list()) == 0:
+    if app.group.count() == 0:
         app.group.create(Group(name="modify_name_test"))
     old_groups = app.group.get_groups_list()
     group = Group(name="EditedName")
