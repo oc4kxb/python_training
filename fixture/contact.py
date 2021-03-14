@@ -26,10 +26,13 @@ class ContactHelper:
         self.contact_cache = None
 
     def modify_first(self, new_contact_data):
+        self.modify_by_index(new_contact_data, 0)
+
+    def modify_by_index(self, new_contact_data, index):
         wd = self.app.wd
         self.open_contacts_page()
-        # click edit first contact button
-        wd.find_element_by_xpath("//tr[@name='entry']//img[@title='Edit']").click()
+        # click edit contact button by index
+        wd.find_elements_by_xpath("//tr[@name='entry']//img[@title='Edit']")[index].click()
         self.fill_form(new_contact_data)
         # click update button
         wd.find_element_by_css_selector("[value='Update']").click()
