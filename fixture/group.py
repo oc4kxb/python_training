@@ -23,9 +23,12 @@ class GroupHelper:
         self.group_cache = None
 
     def modify_first(self, new_group_data):
+        self.modify_by_index(new_group_data, 0)
+
+    def modify_by_index(self, new_group_data, index):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first()
+        self.select_by_index(index)
         wd.find_element_by_name("edit").click()
         self.fill_form(new_group_data)
         wd.find_element_by_name("update").click()
