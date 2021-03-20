@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import re
 
 from model.contact import Contact
 
@@ -140,7 +141,14 @@ class ContactHelper:
     def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
         self.open_contacts_page()
-        wd.find_elements_by_xpath("//tr[@name='entry']//img[@title='Edit']")[index].click()
+        edit_buttons = wd.find_elements_by_xpath("//tr[@name='entry']//a[img[@title='Edit']]")
+        edit_buttons[index].click()
+
+    def open_contact_to_view_by_index(self, index):
+        wd = self.app.wd
+        self.open_contacts_page()
+        view_buttons = wd.find_elements_by_xpath("//tr[@name='entry']//a[img[@title='Details']]")
+        view_buttons[index].click()
 
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
@@ -154,4 +162,15 @@ class ContactHelper:
         secondary_phone = wd.find_element_by_name("phone2").get_attribute("value")
         return Contact(firstname=firstname, lastname=lastname, id=id,
                        home_phone=home_phone, work_phone=work_phone,
+                       mobile_phone=mobile_phone, secondary_phone=secondary_phone)
+
+    def get_contact_info_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        home_phone = re.search("H: (.*)", text).group(1)
+        work_phone = re.search("W: (.*)", text).group(1)
+        mobile_phone = re.search("M: (.*)", text).group(1)
+        secondary_phone = re.search("P: (.*)", text).group(1)
+        return Contact(home_phone=home_phone, work_phone=work_phone,
                        mobile_phone=mobile_phone, secondary_phone=secondary_phone)
