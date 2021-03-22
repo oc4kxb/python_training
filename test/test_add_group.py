@@ -6,8 +6,8 @@ import string
 
 
 def random_string(prefix, maxlen):
-    symbol = string.ascii_letters + string.digits + string.punctuation + 10*" "
-    return prefix + "".join([random.choice(symbol) for i in range(random.randrange(maxlen))])
+    symbols = string.ascii_letters + string.digits + string.punctuation + 10*" "
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
 test_data = [Group(name="", header="", footer="")] + [
