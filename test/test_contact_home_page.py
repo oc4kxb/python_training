@@ -1,9 +1,11 @@
 import re
+from random import randrange
 
 
 def test_contact_info(app):
-    contact_on_home_page = app.contact.get_contacts_list()[0]
-    contact_on_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    index = randrange(app.contact.count())
+    contact_on_home_page = app.contact.get_contacts_list()[index]
+    contact_on_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contact_on_home_page == contact_on_edit_page  # id, firstname, lastname
     assert contact_on_home_page.address == contact_on_edit_page.address
     assert contact_on_home_page.all_emails_from_home_page == merge_emails_like_home_page(contact_on_edit_page)
