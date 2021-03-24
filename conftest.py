@@ -10,12 +10,8 @@ def app(request):
     global fixture
     browser = request.config.getoption("--browser")
     base_url = request.config.getoption("--baseUrl")
-    if fixture is None:
+    if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=base_url)
-    else:
-        if not fixture.is_valid():
-            fixture = Application(browser=browser, base_url=base_url)
-            fixture.session.login(username="admin", password="secret")
     fixture.session.ensure_login(username="admin", password="secret")
     return fixture
 
