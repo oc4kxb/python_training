@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import InvalidArgumentException
 import re
 
 from model.contact import Contact
@@ -75,7 +76,10 @@ class ContactHelper:
         # fill nickname
         self.change_text_field_value("nickname", contact.nickname)
         # upload photo
-        self.upload_photo("photo", contact.photo_name)
+        try:
+            self.upload_photo("photo", contact.photo_name)
+        except InvalidArgumentException:
+            pass
         # fill company name
         self.change_text_field_value("company", contact.company_name)
         # fill title
