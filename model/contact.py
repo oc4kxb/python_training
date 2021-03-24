@@ -47,5 +47,4 @@ class Contact:
 
     @staticmethod
     def get_photo_path(photo_name):
-        current_dir = os.path.abspath(os.path.dirname(__file__))
-        return os.path.join(current_dir, photo_name)
+        return os.path.join(os.getcwd() + "\\..\\files", photo_name)
