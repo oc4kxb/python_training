@@ -4,20 +4,21 @@ from fixture.application import Application
 
 
 fixture = None
-config = None
+target = None
 
 
 @pytest.fixture
 def app(request):
     global fixture
-    global config
+    global target
     browser = request.config.getoption("--browser")
-    if config is None:
-        with open("../config.json") as config_file:
-            config = json.load(config_file)
+    config_option = request.config.getoption("--target")
+    if target is None:
+        with open(config_option) as config_file:
+            target = json.load(config_file)
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=config["baseUrl"])
-    fixture.session.ensure_login(username=config["username"], password=config["password"])
+        fixture = Application(browser=browser, base_url=target["baseUrl"])
+    fixture.session.ensure_login(username=target["username"], password=target["password"])
     return fixture
 
 
@@ -33,4 +34,4 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--config", action="store", default="config.json")
+    parser.addoption("--target", action="store", default="../config.json")
