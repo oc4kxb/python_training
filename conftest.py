@@ -1,4 +1,5 @@
 import json
+import os.path
 import pytest
 from fixture.application import Application
 
@@ -12,9 +13,9 @@ def app(request):
     global fixture
     global target
     browser = request.config.getoption("--browser")
-    config_option = request.config.getoption("--target")
     if target is None:
-        with open(config_option) as config_file:
+        config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
+        with open(config_path) as config_file:
             target = json.load(config_file)
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=target["baseUrl"])
@@ -34,4 +35,4 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
-    parser.addoption("--target", action="store", default="../config.json")
+    parser.addoption("--target", action="store", default="config.json")
