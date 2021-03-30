@@ -1,11 +1,10 @@
 from random import randrange
-
 from model.contact import Contact
 
 
-def test_modify_some_contact_lastname(app):
+def test_modify_some_contact_lastname(app, data_contacts):
     if app.contact.count() == 0:
-        app.contact.create(Contact(lastname="modify", firstname="test"))
+        app.contact.create(data_contacts)
     old_contacts = app.contact.get_contacts_list()
     index = randrange(len(old_contacts))
     contact = Contact(lastname="EditedLastName")
