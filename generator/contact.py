@@ -71,22 +71,22 @@ def random_year(prefix):
 
 
 test_data = [Contact(
-            firstname=random_string("firstname", 15),
-            middlename=random_string("middlename", 15),
-            lastname=random_string("lastname", 15),
-            nickname=random_string("nickname", 7),
-            company_name=random_string("company", 10),
-            employee_title=random_string("title", 10),
-            address=random_string("address", 50),
-            home_phone=random_phone("home"),
-            mobile_phone=random_phone("mobile"),
-            work_phone=random_phone("work"),
-            email=random_email("email"),
-            homepage=random_site("website"),
-            birth_day=random_day(),
-            birth_month=random_month(),
-            birth_year=random_year("year"),
-            photo_name="avatar.jpg")
+    firstname=random_string("firstname", 15),
+    middlename=random_string("middlename", 15),
+    lastname=random_string("lastname", 15),
+    nickname=random_string("nickname", 7),
+    company_name=random_string("company", 10),
+    employee_title=random_string("title", 10),
+    address=random_string("address", 50),
+    home_phone=random_phone("home"),
+    mobile_phone=random_phone("mobile"),
+    work_phone=random_phone("work"),
+    email=random_email("email"),
+    homepage=random_site("website"),
+    birth_day=random_day(),
+    birth_month=random_month(),
+    birth_year=random_year("year"),
+    photo_name="avatar.jpg")
     for i in range(count)
 ]
 
