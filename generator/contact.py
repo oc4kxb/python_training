@@ -70,8 +70,8 @@ def random_year(prefix):
     return prefix + str(random.choice(range(1920, 2021)))
 
 
-test_data = [Contact(firstname="", lastname="")] + [
-    Contact(firstname=random_string("firstname", 15),
+test_data = [Contact(
+            firstname=random_string("firstname", 15),
             middlename=random_string("middlename", 15),
             lastname=random_string("lastname", 15),
             nickname=random_string("nickname", 7),
