@@ -25,7 +25,16 @@ for o, a in opts:
 
 def random_string(prefix, maxlen):
     symbols = string.ascii_letters + string.digits + 10*" "
-    return prefix + "".join([random.choice(symbols) for i in range(maxlen)])
+    result_rough = [random.choice(symbols) for i in range(maxlen)]
+    result_clean = []
+    previous = None
+    for s in result_rough:
+        if s != " ":
+            result_clean.append(s)
+        elif s == " " and previous != " ":
+            result_clean.append(s)
+        previous = s
+    return prefix + "".join(result_clean)
 
 
 def random_phone(prefix):
