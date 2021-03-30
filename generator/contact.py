@@ -24,7 +24,7 @@ for o, a in opts:
 
 
 def random_string(prefix, maxlen):
-    symbols = random.choice([string.ascii_letters + string.digits])
+    symbols = string.ascii_letters + string.digits + 10*" "
     return prefix + "".join([random.choice(symbols) for i in range(maxlen)])
 
 
