@@ -3,9 +3,9 @@ from random import randrange
 from model.group import Group
 
 
-def test_delete_some_group(app):
+def test_delete_some_group(app, data_groups):
     if app.group.count() == 0:
-        app.group.create(Group(name="delete_test"))
+        app.group.create(data_groups)
     old_groups = app.group.get_groups_list()
     index = randrange(len(old_groups))
     app.group.delete_by_index(index)
