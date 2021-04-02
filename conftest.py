@@ -44,8 +44,8 @@ def stop(request):
 @pytest.fixture(scope="session")
 def db(request):
     db_config = load_config(request.config.getoption("--target"))["db"]
-    db_fixture = DbFixture(host=db_config["host"], database=db_config["addressbook"],
-                           user=db_config["root"], password=db_config["password"])
+    db_fixture = DbFixture(host=db_config["host"], database=db_config["database"],
+                           user=db_config["user"], password=db_config["password"])
 
     def fin():
         db_fixture.destroy()
