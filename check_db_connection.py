@@ -1,11 +1,11 @@
-from fixture.db import DbFixture
+from fixture.orm import ORMFixture
 
-db = DbFixture(host="localhost", database="addressbook", user="root", password="")
+db = ORMFixture(host="localhost", database="addressbook", user="root", password="")
 
 try:
-    contacts = db.get_contacts_list()
-    for contact in contacts:
-        print(contact)
-    print(len(contacts))
+    list = db.get_group_list()
+    for element in list:
+        print(element)
+    print(len(list))
 finally:
-    db.destroy()
+    pass
