@@ -1,6 +1,7 @@
 from datetime import datetime
 from pony.orm import *
 from model.group import Group
+from model.contact import Contact
 
 
 class ORMFixture:
@@ -32,5 +33,14 @@ class ORMFixture:
         return list(map(convert, orm_groups))
 
     @db_session
-    def get_group_list(self):
+    def get_groups_list(self):
         return self.convert_groups_to_model(select(g for g in ORMFixture.ORMGroup))
+
+    @db_session
+    def get_contacts_list(self):
+        return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact if c.deprecated is None))
+
+    def convert_contacts_to_model(self, orm_contacts):
+        def convert(orm_contact):
+            return Contact(id=str(orm_contact.id), firstname=orm_contact.firstname, lastname=orm_contact.lastname)
+        return list(map(convert, orm_contacts))
