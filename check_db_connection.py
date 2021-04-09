@@ -1,12 +1,11 @@
-import mysql.connector
+from fixture.db import DbFixture
 
-connection = mysql.connector.connect(host="localhost", database="addressbook", user="root", password="")
+db = DbFixture(host="localhost", database="addressbook", user="root", password="")
 
 try:
-    cursor = connection.cursor()
-    cursor.execute("select * from group_list")
-    something = cursor.fetchall()
-    for row in something:
-        print(row)
+    contacts = db.get_contacts_list()
+    for contact in contacts:
+        print(contact)
+    print(len(contacts))
 finally:
-    connection.close()
+    db.destroy()
