@@ -35,6 +35,14 @@ class GroupHelper:
         self.return_to_groups_page()
         self.group_cache = None
 
+    def modify(self, group):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_by_id(group.id)
+        wd.find_element_by_name("edit").click()
+        self.fill_form(group)
+        wd.find_element_by_name("update").click()
+
     def select_first(self):
         self.select_by_index(0)
 
@@ -76,7 +84,8 @@ class GroupHelper:
 
     def change_field_value(self, element_name, text):
         wd = self.app.wd
-        if text is not None:
+        current_text = wd.find_element_by_name(element_name).text
+        if text is not None and text != current_text:
             wd.find_element_by_name(element_name).click()
             wd.find_element_by_name(element_name).clear()
             wd.find_element_by_name(element_name).send_keys(text)
