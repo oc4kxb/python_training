@@ -1,14 +1,14 @@
 import re
-from random import randrange
+from model.contact import Contact
 
 
 def test_contact_info(app, db):
-    contacts_on_home_page = app.contact.get_contacts_list()
-    contacts_on_db = db.get_contacts_list()
-    assert contact_on_home_page == contact_on_edit_page  # id, firstname, lastname
-    assert contact_on_home_page.address == contact_on_edit_page.address
-    assert contact_on_home_page.all_emails_from_home_page == merge_emails_like_home_page(contact_on_edit_page)
-    assert contact_on_home_page.all_phones_from_home_page == merge_phones_like_home_page(contact_on_edit_page)
+    contacts_on_home_page = sorted(app.contact.get_contacts_list(), key=Contact.id_or_max)
+    contacts_on_db = sorted(db.get_contacts_list(), key=Contact.id_or_max)
+    for c in contacts_on_db:
+        c.all_phones = merge_phones_like_home_page(c)
+        c.all_emails = merge_emails_like_home_page(c)
+    assert contacts_on_home_page == contacts_on_db  # id, firstname, lastname, address, phones, emails
 
 
 def merge_emails_like_home_page(contact):
