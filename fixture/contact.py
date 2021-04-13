@@ -221,3 +221,21 @@ class ContactHelper:
         secondary_phone = re.search("P: (.*)", text).group(1)
         return Contact(home_phone=home_phone, work_phone=work_phone,
                        mobile_phone=mobile_phone, secondary_phone=secondary_phone)
+
+    def add_in_group(self, contact, group):
+        wd = self.app.wd
+        self.open_contacts_page()
+        # select contact
+        self.select_by_id(contact.id)
+        # select group
+        self.select_group_to_add_by_id(group.id)
+        # add contact in group
+        wd.find_element_by_name('add').click()
+        WebDriverWait(wd, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.msgbox")))
+        self.contact_cache = None
+
+    def select_group_to_add_by_id(self, group_id):
+        wd = self.app.wd
+        self.open_contacts_page()
+        Select(wd.find_element_by_name('to_group')).select_by_value(group_id)
+

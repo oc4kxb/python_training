@@ -15,3 +15,6 @@ class DbFixture:
 
     def get_contacts_list(self):
         return self.orm.get_contacts_list()
+
+    def get_contacts_list_in_group(self, group):
+        return self.orm.get_contacts_in_group(group)
