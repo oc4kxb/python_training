@@ -41,6 +41,17 @@ class ContactHelper:
         self.app.return_to_home_page()
         self.contact_cache = None
 
+    def modify(self, contact):
+        wd = self.app.wd
+        self.open_contacts_page()
+        self.open_contact_to_edit_by_id(contact.id)
+        self.fill_form(contact)
+        # click update button
+        wd.find_element_by_css_selector("[value='Update']").click()
+        # return to home page
+        self.app.return_to_home_page()
+        self.contact_cache = None
+
     def delete_first(self):
         self.delete_by_index(0)
 
@@ -58,9 +69,27 @@ class ContactHelper:
         self.open_contacts_page()
         self.contact_cache = None
 
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.open_contacts_page()
+        self.select_by_id(id)
+        # click delete button
+        wd.find_element_by_css_selector("[value='Delete']").click()
+        # confirm deletion
+        wd.switch_to.alert.accept()
+        # wait delete confirmation message
+        WebDriverWait(wd, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.msgbox")))
+        # return to home page
+        self.open_contacts_page()
+        self.contact_cache = None
+
     def select_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def open_contacts_page(self):
         wd = self.app.wd
@@ -103,7 +132,8 @@ class ContactHelper:
 
     def change_text_field_value(self, element_name, text):
         wd = self.app.wd
-        if text is not None:
+        current_text = wd.find_element_by_name(element_name).text
+        if text is not None and text != current_text:
             wd.find_element_by_name(element_name).click()
             wd.find_element_by_name(element_name).clear()
             wd.find_element_by_name(element_name).send_keys(text)
@@ -149,6 +179,13 @@ class ContactHelper:
         self.open_contacts_page()
         edit_buttons = wd.find_elements_by_xpath("//tr[@name='entry']//a[img[@title='Edit']]")
         edit_buttons[index].click()
+
+    def open_contact_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.open_contacts_page()
+        edit_button = wd.find_element_by_xpath("//input[@value='%s']/../following-sibling::td/a[img[@title='Edit']]"
+                                               % str(id))
+        edit_button.click()
 
     def open_contact_to_view_by_index(self, index):
         wd = self.app.wd
