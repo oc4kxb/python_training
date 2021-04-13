@@ -19,9 +19,9 @@ def test_add_contact_in_group(app, db, data_contacts, data_groups):
         app.contact.create(data_contacts)
     if len(db.get_groups_list()) == 0:
         app.group.create(data_groups)
+    contact = random.choice(db.get_contacts_list())
     group = random.choice(db.get_groups_list())
     old_contacts_in_group = db.get_contacts_list_in_group(group)
-    contact = random.choice(db.get_contacts_list())
     app.contact.add_in_group(contact, group)
     new_contacts_in_group = db.get_contacts_list_in_group(group)
     if contact not in old_contacts_in_group:

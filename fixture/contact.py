@@ -239,3 +239,20 @@ class ContactHelper:
         self.open_contacts_page()
         Select(wd.find_element_by_name('to_group')).select_by_value(group_id)
 
+    def remove_from_group(self, contact, group):
+        wd = self.app.wd
+        self.open_contacts_page()
+        # select_group_in_list
+        self.select_group_to_remove_by_id(group.id)
+        # select_contact
+        self.select_by_id(contact.id)
+        # remove_from_group
+        wd.find_element_by_name('remove').click()
+        WebDriverWait(wd, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.msgbox")))
+        self.contact_cache = None
+
+    def select_group_to_remove_by_id(self, group_id):
+        wd = self.app.wd
+        self.open_contacts_page()
+        Select(wd.find_element_by_name('group')).select_by_value(group_id)
+
